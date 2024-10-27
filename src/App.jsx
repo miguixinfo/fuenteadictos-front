@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from './pages/Register';
+import Register from './pages/register/Register';
 import Layout from "./components/Layout";
 import Home from './pages/Home';
 import Login from "./pages/login/Login";
 import About from "./pages/About";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
     return (
@@ -12,9 +13,17 @@ const App = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route element={<Layout />}>
-                    <Route path="/home" element={<Home />} />
+                    <Route path="/home" element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/about" element={
+                        <PrivateRoute>
+                            <About />
+                        </PrivateRoute>
+                    } />
                 </Route>
-                <Route path="/about" element={<About />} />
             </Routes>
         </Router>
     )

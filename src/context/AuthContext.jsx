@@ -25,6 +25,9 @@ export function AuthProvider({ children }) {
 
     const isAuthenticated = !!authToken;
 
+    // TODO implementar un mecanismo de verificación de token
+    // TODO implmentar un mecanismo de renovación de token
+
     return (
         <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated }}>
             {children}

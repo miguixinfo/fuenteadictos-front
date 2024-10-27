@@ -1,20 +1,22 @@
 /* General styles for the Navbar */
 .navbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #e0f7fa; /* Azul claro, estilo agua */
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 15px 0;
-    z-index: 1000;
-    font-family: 'Helvetica Neue', sans-serif;
-    border-top: 2px solid #00acc1; /* Azul más oscuro */
-    backdrop-filter: blur(10px); /* Efecto de fondo borroso */
-  }
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #84b9fd; /* Azul claro, estilo agua */
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 0;
+  z-index: 1000;
+  font-family: 'Helvetica Neue', sans-serif;
+  border-top: 2px solid transparent; /* Make the border transparent */
+  background-image: linear-gradient(to bottom, #0056b3 1%, #84b9fd 95%); /* Gradient for the top border */
+  background-origin: border-box; /* Ensure the gradient starts from the border */
+  backdrop-filter: blur(10px); /* Efecto de fondo borroso */
+}
   
   /* Estilo de los items de navegación */
   .nav-item {
@@ -35,7 +37,7 @@
   .nav-icon {
     font-size: 26px;
     margin-bottom: 5px;
-    color: #33757e; /* Color azul agua en los iconos */
+    color: #ffffff; /* Color azul agua en los iconos */
     transition: transform 0.3s ease, color 0.3s ease;
   }
   
@@ -48,7 +50,7 @@
   .nav-text {
     font-size: 13px;
     font-weight: 500;
-    color: #004d40; /* Un azul profundo, elegante */
+    color: #ffffff; /* Un azul profundo, elegante */
     letter-spacing: 0.6px;
   }
   

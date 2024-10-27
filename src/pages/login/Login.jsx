@@ -1,13 +1,12 @@
 import { useContext, useState } from 'react';
-import { Form, Button, Card, Container, InputGroup, Alert } from 'react-bootstrap';
+import { Form, Button, Card, Container, InputGroup } from 'react-bootstrap';
+import { Alert } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { AuthContext } from '../../context/AuthContext';
 import { login as loginService } from '../../api/authService';
 
 const Login = () => {
-
-    // TODO no permitir entrar a las paginas si el usuario notiene un token válido
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -25,6 +24,8 @@ const Login = () => {
             navigate("/home");
         } catch (error) {
             setError(error.message);
+            setUsername("");
+            setPassword("");
         }
     }
 
@@ -57,7 +58,7 @@ const Login = () => {
                                     />
                                 </InputGroup>
                             </Form.Group>
-                            {error && <Alert variant="danger" className="mt-3 text-danger">{error}</Alert>}
+                            {error && <Alert variant='outlined' severity='error' className='mt-3' sx={{ bgcolor: 'background.paper' }}>{error}</Alert>}
                             <Button variant="primary" type="submit" className="w-100 mt-4">
                                 Entrar
                             </Button>
