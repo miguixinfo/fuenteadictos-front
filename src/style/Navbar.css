@@ -1,0 +1,65 @@
+/* General styles for the Navbar */
+.navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #e0f7fa; /* Azul claro, estilo agua */
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 0;
+    z-index: 1000;
+    font-family: 'Helvetica Neue', sans-serif;
+    border-top: 2px solid #00acc1; /* Azul más oscuro */
+    backdrop-filter: blur(10px); /* Efecto de fondo borroso */
+  }
+  
+  /* Estilo de los items de navegación */
+  .nav-item {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #00796b; /* Azul tirando a verde, tono calmado */
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Hover en los items de navegación */
+  .nav-item:hover {
+    color: #00838f; /* Azul ligeramente más oscuro en hover */
+  }
+  
+  /* Estilo de los iconos de navegación */
+  .nav-icon {
+    font-size: 26px;
+    margin-bottom: 5px;
+    color: #33757e; /* Color azul agua en los iconos */
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Hover en los iconos */
+  .nav-item:hover .nav-icon {
+    color: #234e54; /* Azul más brillante al hacer hover */
+  }
+  
+  /* Estilo del texto debajo de los iconos */
+  .nav-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #004d40; /* Un azul profundo, elegante */
+    letter-spacing: 0.6px;
+  }
+  
+  /* Estilos responsivos para dispositivos más pequeños */
+  @media (max-width: 768px) {
+    .nav-icon {
+      font-size: 22px;
+    }
+  
+    .nav-text {
+      font-size: 11px;
+    }
+  }
+  
