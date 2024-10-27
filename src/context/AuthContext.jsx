@@ -1,21 +1,32 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [autenticado, setAutenticado] = useState(false);
+    const [authToken, setAuthToken] = useState(null);
 
-    const login = () => {
-        setAutenticado(true);
-    };
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            setAuthToken(token);
+        }
+    }, [])
+
+    const login = (token) => {
+        setAuthToken(token);
+        localStorage.setItem("token", token);
+    }
 
     const logout = () => {
-        setAutenticado(false);
+        setAuthToken(null);
+        localStorage.removeItem("token");
     };
 
+    const isAuthenticated = !!authToken;
+
     return (
-        <AuthContext.Provider value={{ autenticado, login, logout }}>
+        <AuthContext.Provider value={{ authToken, login, logout, isAuthenticated }}>
             {children}
         </AuthContext.Provider>
     );
