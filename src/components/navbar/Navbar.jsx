@@ -1,6 +1,6 @@
 import { FaMapMarkedAlt, FaUser } from 'react-icons/fa'; // Icons from Font Awesome
 import { TbFountainFilled } from "react-icons/tb";
-import '../style/Navbar.css'; // Importamos el archivo CSS
+import './Navbar.css'; // Importamos el archivo CSS
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
