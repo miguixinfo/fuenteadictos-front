@@ -1,23 +1,23 @@
-import { useContext, useState } from 'react';
-import { Form, Button, Card, Container, InputGroup } from 'react-bootstrap';
-import { Alert } from '@mui/material';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.css';
-import { AuthContext } from '../../context/AuthContext';
 import { login as loginService } from '../../api/authService';
+import { AuthContext } from '../../context/AuthContext';
+import { Container, Card, Spinner, Button, Form, InputGroup } from 'react-bootstrap';
+import { Alert } from '@mui/material';
+import './Login.css';
 
 const Login = () => {
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const onHandleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const data = await loginService(username, password);
             login(data.access_token);
@@ -26,6 +26,8 @@ const Login = () => {
             setError(error.message);
             setUsername("");
             setPassword("");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -44,6 +46,7 @@ const Login = () => {
                                         placeholder="Ingresa tu usuario"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
+                                        disabled={isLoading}
                                     />
                                 </InputGroup>
                             </Form.Group>
@@ -55,12 +58,13 @@ const Login = () => {
                                         placeholder="Ingresa tu contraseña"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
+                                        disabled={isLoading}
                                     />
                                 </InputGroup>
                             </Form.Group>
                             {error && <Alert variant='outlined' severity='error' className='mt-3' sx={{ bgcolor: 'background.paper' }}>{error}</Alert>}
-                            <Button variant="primary" type="submit" className="w-100 mt-4">
-                                Entrar
+                            <Button variant="primary" type="submit" className="w-100 mt-4" disabled={isLoading}>
+                                {isLoading ? <Spinner animation="border" size="sm" /> : "Entrar"}
                             </Button>
                         </Form>
                         <div className="text-center mt-3">
@@ -75,4 +79,4 @@ const Login = () => {
     );
 }
 
-export default Login
+export default Login;

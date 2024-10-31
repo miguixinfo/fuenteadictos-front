@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Alert, Button, Card, Container, Form, InputGroup } from "react-bootstrap";
+import { Button, Card, Container, Form, InputGroup, Spinner } from "react-bootstrap";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { register as registerService } from "../../api/authService";
+import { Alert } from "@mui/material";
 
 const Register = () => {
-
-    // TODO implementar un servicio de verificación de email
 
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -14,45 +13,49 @@ const Register = () => {
 
     const [isEmailValid, setIsEmailValid] = useState(null);
     const [isUsernameValid, setIsUsernameValid] = useState(null);
-    const [isPasswordValid, setisPasswordValid] = useState(null);
+    const [isPasswordValid, setIsPasswordValid] = useState(null);
 
     const [error, setError] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
     /* Handle email change to check if its valid */
-    const validEmail = (email) => {
-        setEmail(email);
+    const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         setIsEmailValid(emailRegex.test(email));
+        setEmail(email);
     }
 
     /* Handle username change to check if its valid */
-    const validUsername = (username) => {
-        setUsername(username);
-        // Username must have at least 4 characters and 15 characters max and no spaces
-        const usernameRegex = /^[a-zA-Z0-9]{4,15}$/;
+    const validateUsername = (username) => {
+        const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
         setIsUsernameValid(usernameRegex.test(username));
+        setUsername(username);
     }
 
 
     /* Password validations */
     const validPassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        setIsPasswordValid(passwordRegex.test(password));
         setPassword(password);
-        // Password must have at least 8 characters, at least one number, one uppercase letter, one lowercase letter and one special character
-        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-        setisPasswordValid(passwordRegex.test(password));
     }
 
-    const onHandleSubmit = async (e) => {
+    const isFormValid = isEmailValid && isUsernameValid && isPasswordValid;
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (isEmailValid && isUsernameValid && isPasswordValid) {
+        setIsLoading(true);
+        if (isFormValid) {
             try {
                 await registerService(email, username, password);
                 navigate("/");
-                // eslint-disable-next-line no-unused-vars
             } catch (error) {
-                setError("Error al registrar el usuario, revisa los campos cumplimentados.");
+                setError(error.message);
+            } finally {
+                setIsLoading(false);
             }
         }
     }
@@ -64,15 +67,16 @@ const Register = () => {
                 <Card className="shadow-lg p-4 login-card">
                     <Card.Body>
                         <h2 className="text-center mb-4 text-primary">Registro</h2>
-                        <Form onSubmit={onHandleSubmit}>
-                            <Form.Group controlId="email">
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group controlId="email" className='mt-2'>
                                 <Form.Label>Correo electrónico</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        type="text"
+                                        type="email"
                                         placeholder="Ingresa tu Email"
                                         value={email}
-                                        onChange={(e) => validEmail(e.target.value)}
+                                        onChange={(e) => validateEmail(e.target.value)}
+                                        disabled={isLoading}
                                     />
                                     <InputGroup.Text>
                                         {isEmailValid === null ? null : isEmailValid ? (
@@ -95,7 +99,8 @@ const Register = () => {
                                         type="text"
                                         placeholder="Ingresa tu username"
                                         value={username}
-                                        onChange={(e) => validUsername(e.target.value)}
+                                        onChange={(e) => validateUsername(e.target.value)}
+                                        disabled={isLoading}
                                     />
                                     <InputGroup.Text>
                                         {isUsernameValid === null ? null : isUsernameValid ? (
@@ -119,6 +124,7 @@ const Register = () => {
                                         placeholder="Ingresa tu contraseña"
                                         value={password}
                                         onChange={(e) => validPassword(e.target.value)}
+                                        disabled={isLoading}
                                     />
                                     <InputGroup.Text>
                                         {isPasswordValid === null ? null : isPasswordValid ? (
@@ -140,9 +146,9 @@ const Register = () => {
                                     )}
                                 </InputGroup>
                             </Form.Group>
-                            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
-                            <Button variant="primary" type="submit" className="w-100 mt-4">
-                                Registrarme
+                            {error && <Alert variant='outlined' severity='error' className='mt-3' sx={{ bgcolor: 'background.paper' }}>{error}</Alert>}
+                            <Button variant="primary" type="submit" className="w-100 mt-4" disabled={!isFormValid || isLoading}>
+                                {isLoading ? <Spinner animation="border" size="sm" /> : "Registrarse"}
                             </Button>
                         </Form>
                         <div className="text-center mt-3">
