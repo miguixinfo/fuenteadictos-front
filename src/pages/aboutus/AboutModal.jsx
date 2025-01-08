@@ -3,18 +3,25 @@ import ReactDOM from 'react-dom';
 import './AboutModal.css';
 
 const AboutModal = ({ isOpen, onClose }) => {
-    if (!isOpen) return null; // Si no está abierto, no renderizamos nada
+    if (!isOpen) return null;
+
+    const handleOverlayClick = (e) => {
+        if (e.target === e.currentTarget) {
+            // Cierra el modal solo si el clic ocurrió en el overlay
+            onClose();
+        }
+    };
 
     return ReactDOM.createPortal(
-        <div className="modal-overlay">
-            <div className="modal-content">
+        <div className="modal-overlay" onClick={handleOverlayClick}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <button
                     onClick={onClose}
                     className="modal-close-btn"
                 >
                     &times;
                 </button>
-                <h2 className="modal-title">¿Quienes somos?</h2>
+                <h2 className="modal-title">About Us</h2>
                 <p>
                     Localiza al instante las fuentes de agua más cercanas en Toledo, sin perder tiempo.
                     Con nuestra app, tendrás acceso rápido a todas las fuentes disponibles a tu alrededor.
@@ -29,7 +36,7 @@ const AboutModal = ({ isOpen, onClose }) => {
                 </p>
             </div>
         </div>,
-        document.body // Renderizamos fuera del contenedor del mapa
+        document.body // Renderizamos en el body
     );
 }
 
