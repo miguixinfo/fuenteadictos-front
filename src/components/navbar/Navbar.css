@@ -13,7 +13,7 @@
   z-index: 1000;
   font-family: 'Helvetica Neue', sans-serif;
   border-top: 2px solid transparent; /* Make the border transparent */
-  background-image: linear-gradient(to bottom, #0056b3 1%, #84b9fd 95%); /* Gradient for the top border */
+  background-image: linear-gradient(to bottom, #a0c9ff 1%, #2d6bad 95%); /* Gradient for the top border */
   background-origin: border-box; /* Ensure the gradient starts from the border */
   backdrop-filter: blur(10px); /* Efecto de fondo borroso */
 }
@@ -65,3 +65,11 @@
     }
   }
   
+  .no-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }

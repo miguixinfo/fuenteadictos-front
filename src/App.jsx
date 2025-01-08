@@ -3,7 +3,6 @@ import Register from './pages/register/Register';
 import Layout from "./components/Layout";
 import Home from './pages/Home';
 import Login from "./pages/login/Login";
-import About from "./pages/aboutus/About";
 import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
@@ -16,11 +15,6 @@ const App = () => {
                     <Route path="/home" element={
                         <PrivateRoute>
                             <Home />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/about" element={
-                        <PrivateRoute>
-                            <About />
                         </PrivateRoute>
                     } />
                 </Route>

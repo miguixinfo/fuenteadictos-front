@@ -19,8 +19,8 @@ const Login = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const data = await loginService(username, password);
-            login(data.access_token);
+            //const data = await loginService(username, password); // Uncomment this line to enable login
+            //login(data.access_token); // Uncomment this line to enable login
             navigate("/home");
         } catch (error) {
             setError(error.message);
